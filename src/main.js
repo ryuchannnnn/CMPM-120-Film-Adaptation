@@ -3,15 +3,18 @@ let config = {
     render: {
         pixelArt: true
     },
-    width: 320,
-    height: 240,
+    width: 720,
+    height: 720,
+    scale: {
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     physics: {
         default: 'arcade',
             arcade:{
                 debug: true
             }
     },
-    zoom: 2,
+    zoom: 1,
     scene: [Load,Menu]
 }
 
