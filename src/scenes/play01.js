@@ -27,7 +27,7 @@ class play01 extends Phaser.Scene{
         this.dialougeScript = 
         ["Seems I am the only one left to keep you company. When Min Min was home,\nI thought… she'd solve all the problems around here. But now… there's no\none to do it. And I really don't know when she will be back.\nIt's hard for me to mumble like this. I hope you won't be offended if I \nsay… It's like praying.", 
         "I'm not sure if the other party can hear me… and I'm not sure if I'm\nsincere enough.",
-        "Frankly...\nThere's very little I'm sure about these days. I wake up feeling unsure\nabout almost everything, and I wonder why I wake up at all, just to face\nthe same uncertainties again and again.\n5", 
+        "Frankly...\nThere's very little I'm sure about these days. I wake up feeling unsure\nabout almost everything, and I wonder why I wake up at all, just to face\nthe same uncertainties again and again.", 
         "...", 
         "Would you want to wake up if you were me?", 
         "Maybe Yang Yang is right. You lived so many more years. Other than these\nquestions we can't answer...",
@@ -108,7 +108,6 @@ class play01 extends Phaser.Scene{
                 this.currentDialouge +=1;
                 if(this.currentDialouge<this.dialougeScript.length){
                     this.dialouge.text = this.dialougeScript[this.currentDialouge];
-                    
                 }
             }
             if(this.currentDialouge>=this.dialougeScript.length){

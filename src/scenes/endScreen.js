@@ -4,5 +4,12 @@ class End extends Phaser.Scene{
     }
     create(){
         this.add.text(20, 20, "End Scene");
+        this.add.text(20, 40, "Press Space to go back to menu");
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    }
+    update(){
+        if(keySPACE.isDown){
+            this.scene.start('menuScene');
+        }
     }
 }
