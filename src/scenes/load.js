@@ -21,6 +21,16 @@ class Load extends Phaser.Scene{
 
         this.load.path = './assets/';
         console.log('assets path has been set');
+        //playScene 1 assets
+        this.load.image('tilesetHouseImage', 'house_inside.png');
+        this.load.tilemapTiledJSON('scene1Json', 'tileMap/scene1TileMap.json');
+        //playScene 2 assets
+
+        //playScene 3 assets
+
+        //temp character assets
+        this.load.image('bSquare', 'temp/l0_sprite_square12.png' );
+        console.log('assets have finished loading');
 
     }
     create() {
@@ -32,7 +42,8 @@ class Load extends Phaser.Scene{
         }
 
         // go to Title scene
-        this.scene.start('menuScene');
+        //this.scene.start('menuScene');
+        this.scene.start('play01Scene');
     }
 }
 

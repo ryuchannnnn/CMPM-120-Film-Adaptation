@@ -15,7 +15,7 @@ let config = {
             }
     },
     zoom: 1,
-    scene: [Load,Menu]
+    scene: [Load,Menu,play01]
 }
 
 const game = new Phaser.Game(config)
@@ -27,3 +27,4 @@ let w = game.config.width;
 let h = game.config.height;
 let borderUISize = game.config.height / 15;
 let borderPadding = borderUISize / 3;
+let keyLEFT, keyRIGHT, keyDOWN, keyUP, keySHIFT, keyP, keyZ, keyX;
