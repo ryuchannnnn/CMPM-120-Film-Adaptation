@@ -140,10 +140,11 @@ class play01 extends Phaser.Scene{
             }
             this.direction.normalize();
             this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
-            if(this.father.x==630 && (362<=this.father.y<=374)){ //carpet X = 630 and Y = (362,374)
+            if(this.father.x==618 && (361<=this.father.y<=378)){ //carpet X = 630 and Y = (362,374)
                 console.log("On Carpet");
                 this.textBox=true;
-            }      
+            }
+            // console.log("coord at: ("+this.father.x+","+this.father.y+")");      
         }else if(this.textBox==true){
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
