@@ -106,14 +106,14 @@ class play01 extends Phaser.Scene{
         this.physics.add.collider(this.father, furnitureLayer);
 
         //text
-        this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding + 500, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
-        this.dialougeBox.visible = false;
+        this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
+        //this.dialougeBox.visible = false;
         
-        this.dialouge = this.add.text(12, borderUISize - borderPadding + 550, this.dialougeScript[this.currentDialouge]);
-        this.speaker = this.add.text(12, borderUISize - borderPadding + 510, this.speakerOption[0]);
+        this.dialouge = this.add.text(12, borderUISize - borderPadding + 380, this.dialougeScript[this.currentDialouge]);
+        this.speaker = this.add.text(12, borderUISize - borderPadding + 360, this.speakerOption[0]);
 
-        this.speaker.visible = false;        
-        this.dialouge.visible = false;
+        this.speaker.visible = true;        
+        this.dialouge.visible = true;
     }
     update(time,delta){
         this.direction = new Phaser.Math.Vector2(0);
@@ -140,11 +140,11 @@ class play01 extends Phaser.Scene{
             }
             this.direction.normalize();
             this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
-            if(this.father.x==618 && (361<=this.father.y<=378)){ //carpet X = 630 and Y = (362,374)
+            if(this.father.x==362 && (264<=this.father.y<=268)){ //carpet X = 630 and Y = (362,374)
                 console.log("On Carpet");
-                this.textBox=true;
+                //this.textBox=true;
             }
-            // console.log("coord at: ("+this.father.x+","+this.father.y+")");      
+            console.log("coord at: ("+this.father.x+","+this.father.y+")");      
         }else if(this.textBox==true){
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
