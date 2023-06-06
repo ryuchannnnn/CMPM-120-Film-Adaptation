@@ -2,6 +2,46 @@ class play01 extends Phaser.Scene{
     constructor(){
         super({key: 'play01Scene'})
     }
+
+    preload(){
+        //Father Animation
+        this.anims.create({
+
+            key: "down", //you'll need this key when you need to play an animation
+            frameRate: 12,
+            frames: this.anims.generateFrameNumbers('father', {
+                frames: ["dadSprite00", "dadSprite01", "dadSprite02", "dadSprite03"] //names are from the json files
+            })
+        })
+        this.anims.create({
+
+            key: "up",
+            frameRate: 12,
+            frames: this.anims.generateFrameNumbers('father', {
+                frames: ["dadSprite012", "dadSprite013", "dadSprite014", "dadSprite015"]
+            })
+        })
+        this.anims.create({
+
+            key: "right",
+            frameRate: 12,
+            frames: this.anims.generateFrameNumbers('father', {
+                frames: ["dadSprite08", "dadSprite09", "dadSprite010", "dadSprite011"]
+            })
+        })
+
+        this.anims.create({
+
+            key: "left",
+            frameRate: 12,
+            frames: this.anims.generateFrameNumbers('father', {
+
+                frames: ["dadSprite04", "dadSprite05", "dadSprite06", "dadSprite07"]
+            })
+        })
+    }
+
+
     create(){
         //text boxes
         let textConfig = {
@@ -55,14 +95,15 @@ class play01 extends Phaser.Scene{
         wallsLayer.setCollisionByProperty({ collides: true });
         furnitureLayer.setCollisionByProperty({collides: true});
 
-        //temp character
-        this.tempChar = this.physics.add.sprite(centerX, centerY, 'bSquare');
-        this.tempChar.body.setCollideWorldBounds(true);
+
+        //father
+        this.father = this.physics.add.sprite(centerX, centerY, 'father', 'dadSprite00');
+        this.father.body.setCollideWorldBounds(true);
         this.vel = 100;
 
         //collison code
-        this.physics.add.collider(this.tempChar, wallsLayer);
-        this.physics.add.collider(this.tempChar, furnitureLayer);
+        this.physics.add.collider(this.father, wallsLayer);
+        this.physics.add.collider(this.father, furnitureLayer);
 
         //text
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding + 500, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
@@ -83,18 +124,23 @@ class play01 extends Phaser.Scene{
                 this.zLastClicked = time + 500;
             }
             if(keyLEFT.isDown){
+                this.father.play("left", true); //play animation key for hiting left
                 this.direction.x = -5;
             }else if(keyRIGHT.isDown){
                 this.direction.x = 5;
+                this.father.play("right", true);
             }
             if(keyUP.isDown){
+                this.father.play("up", true);
                 this.direction.y = -5;
             }else if(keyDOWN.isDown){
+                this.father.play("down", true);
                 this.direction.y = 5;
+                
             }
             this.direction.normalize();
-            this.tempChar.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
-            if(this.tempChar.x==630 && (362<=this.tempChar.y<=374)){ //carpet X = 630 and Y = (362,374)
+            this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
+            if(this.father.x==630 && (362<=this.father.y<=374)){ //carpet X = 630 and Y = (362,374)
                 console.log("On Carpet");
                 this.textBox=true;
             }      

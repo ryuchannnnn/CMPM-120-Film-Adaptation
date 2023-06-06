@@ -30,7 +30,13 @@ class Load extends Phaser.Scene{
 
         //temp character assets
         this.load.image('bSquare', 'temp/l0_sprite_square12.png' );
+
+        //father character assets
+        this.load.atlas('father', 'characterSprite/dadSpriteImages/dadSpritesheet.png', 'characterSprite/dadSpriteImages/dadSpritesheetJSON.json');
+
         this.load.image('grandmaBed', 'characterSprite/grandmainBed.png');
+
+
 
 
         console.log('assets have finished loading');
