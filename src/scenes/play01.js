@@ -4,7 +4,7 @@ class play01 extends Phaser.Scene{
     }
 
     preload(){
-        //Father Animation
+        //Father Animation, animations will be played depending on what keys are clicked
         this.anims.create({
 
             key: "down", //you'll need this key when you need to play an animation
@@ -43,7 +43,7 @@ class play01 extends Phaser.Scene{
 
 
     create(){
-        //text boxes
+        //text boxes for our dialouge boxes
         let textConfig = {
             fontFamily: 'Copperplate',
             fontSize: '28px',
@@ -61,18 +61,20 @@ class play01 extends Phaser.Scene{
         this.textBox = false;
         console.log("At Play01");
 
-        //array list
+        //array list, contains the dialouge that is being shown on the screen
 
-        //max five lines in a box, copy this for each index => "1\n2\n3\n4\n5"
         this.dialougeScript = 
-        ["Seems I am the only one left to keep you company. When Min Min was home,\nI thought… she'd solve all the problems around here. But now… there's no\none to do it. And I really don't know when she will be back.\nIt's hard for me to mumble like this. I hope you won't be offended if I \nsay… It's like praying.", 
-        "I'm not sure if the other party can hear me… and I'm not sure if I'm\nsincere enough.",
-        "Frankly...\nThere's very little I'm sure about these days. I wake up feeling unsure\nabout almost everything, and I wonder why I wake up at all, just to face\nthe same uncertainties again and again.", 
+        ["Seems I am the only one left to keep you company.",
+        "When Min Min was home, I thought… she'd solve\nall the problems around here. But now… there's\nno one to do it.",
+        "And I really don't know when she will be back.\nIt's hard for me to mumble like this.\nI hope you won't be offended if I say… It's like \npraying.",
+        "I'm not sure if the other party can hear me…\nand I'm not sure if I'm sincere enough.",
+        "Frankly...\nThere's very little I'm sure about these days.\nI wake up feeling unsure about almost everything,", 
+        "and I wonder why I wake up at all, just to face\nthe same uncertainties again and again.", 
         "...", 
-        "Would you want to wake up if you were me?", 
-        "Maybe Yang Yang is right. You lived so many more years. Other than these\nquestions we can't answer...",
+        "Would you want to wake up if you were me?",
+        "Maybe Yang Yang is right. You lived so many more\nyears. Other than these questions we can't\nanswer...", 
         "what is there to tell you?", 
-        "Anyhow I guess you don't blame Yang Yang for not talking to you,\nin many ways he takes after me.", 
+        "Anyhow I guess you don't blame Yang Yang for not\ntalking to you, in many ways he takes after me.", 
         "Really."];
         this.currentDialouge = 0;
         this.speakerOption = ["NJ"];
@@ -107,13 +109,13 @@ class play01 extends Phaser.Scene{
 
         //text
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
-        //this.dialougeBox.visible = false;
+        this.dialougeBox.visible = false;
         
-        this.dialouge = this.add.text(12, borderUISize - borderPadding + 380, this.dialougeScript[this.currentDialouge]);
-        this.speaker = this.add.text(12, borderUISize - borderPadding + 360, this.speakerOption[0]);
+        this.dialouge = this.add.text(10, borderUISize - borderPadding + 380, this.dialougeScript[this.currentDialouge]);
+        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption[0]);
 
-        this.speaker.visible = true;        
-        this.dialouge.visible = true;
+        this.speaker.visible = false;        
+        this.dialouge.visible = false;
     }
     update(time,delta){
         this.direction = new Phaser.Math.Vector2(0);
@@ -142,9 +144,9 @@ class play01 extends Phaser.Scene{
             this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
             if(this.father.x==362 && (264<=this.father.y<=268)){ //carpet X = 630 and Y = (362,374)
                 console.log("On Carpet");
-                //this.textBox=true;
+                this.textBox=true;
             }
-            console.log("coord at: ("+this.father.x+","+this.father.y+")");      
+            //console.log("coord at: ("+this.father.x+","+this.father.y+")");      
         }else if(this.textBox==true){
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
