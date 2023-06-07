@@ -10,6 +10,7 @@ class Rules extends Phaser.Scene{
     }
     update(){
         if(keySPACE.isDown){
+            this.sound.play('beap', { volume: 0.5 });
             this.scene.start('menuScene');
         }
     }

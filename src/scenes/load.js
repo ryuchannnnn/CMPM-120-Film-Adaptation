@@ -27,12 +27,23 @@ class Load extends Phaser.Scene{
         //playScene 2 assets
 
         //playScene 3 assets
+        this.load.image('outsideImage', 'set.gif');
+        this.load.image('graveStones', 'lpc_grave_markers_rework-1.3/PNG/32x32/grave_markers.png');
+        this.load.tilemapTiledJSON('scene3Json', 'tileMap/graveyardMap.json');
 
-        //temp character assets
-        this.load.image('bSquare', 'temp/l0_sprite_square12.png' );
+        //audio assets
+        this.load.audio('beap', 'buttonSFX.wav');
+        
 
+
+        //son character assets
+        this.load.atlas('son', 'characterSprite/sonSpriteImages/sonSprite.png', 'characterSprite/sonSpriteImages/sonSprite.json');
+        //dauther character assets
+        this.load.atlas('daughter', 'characterSprite/daughterSpriteImages/daughterSpriteSheet.png', 'characterSprite/daughterSpriteImages/daughterSpriteSheet.json')
         //father character assets
         this.load.atlas('father', 'characterSprite/dadSpriteImages/dadSpritesheet.png', 'characterSprite/dadSpriteImages/dadSpritesheetJSON.json');
+        //mother character assets
+        this.load.image('mother', 'characterSprite/mother.png')
 
         this.load.image('grandmaBed', 'characterSprite/grandmainBed.png');
 
@@ -52,7 +63,7 @@ class Load extends Phaser.Scene{
 
         // go to Title scene
         this.scene.start('menuScene');
-        // this.scene.start('play01Scene');
+        // this.scene.start('play03Scene');
     }
 }
 

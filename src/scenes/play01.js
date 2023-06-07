@@ -121,10 +121,6 @@ class play01 extends Phaser.Scene{
         this.direction = new Phaser.Math.Vector2(0);
 
         if(this.textBox==false){
-            if(keyZ.isDown && time>this.zLastClicked){
-                console.log("Z was clicked");
-                this.zLastClicked = time + 500;
-            }
             if(keyLEFT.isDown){
                 this.father.play("left", true); //play animation key for hiting left
                 this.direction.x = -5;
@@ -142,16 +138,17 @@ class play01 extends Phaser.Scene{
             }
             this.direction.normalize();
             this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
-            if(this.father.x==362 && (264<=this.father.y<=268)){ //carpet X = 630 and Y = (362,374)
+            if(this.father.x==362 && (264<=this.father.y<=268)){ 
+                this.sound.play('beap', { volume: 0.5 });
                 console.log("On Carpet");
                 this.textBox=true;
-            }
-            //console.log("coord at: ("+this.father.x+","+this.father.y+")");      
+            }   
         }else if(this.textBox==true){
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
             this.speaker.visible = true;
             if(keyZ.isDown && time>this.zLastClicked){
+                this.sound.play('beap', { volume: 0.5 });
                 console.log("Z was clicked");
                 this.zLastClicked = time + 500;
                 this.currentDialouge +=1;
@@ -160,7 +157,7 @@ class play01 extends Phaser.Scene{
                 }
             }
             if(this.currentDialouge>=this.dialougeScript.length){
-                this.scene.start('endScene');
+                this.scene.start('play03Scene');
             }
         }
 
