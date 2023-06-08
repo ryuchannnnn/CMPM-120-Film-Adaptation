@@ -1,42 +1,42 @@
-class play01 extends Phaser.Scene{
+class play02 extends Phaser.Scene{
     constructor(){
-        super({key: 'play01Scene'})
+        super({key: 'play02Scene'})
     }
 
     preload(){
-        //Father Animation, animations will be played depending on what keys are clicked
+        //Daughter Animation, animations will be played depending on what keys are clicked (ie: up will play the her walking up)
         this.anims.create({
 
-            key: "down", //you'll need this key when you need to play an animation
+            key: "downDaughter", //you'll need this key when you need to play an animation
             frameRate: 12,
-            frames: this.anims.generateFrameNumbers('father', {
-                frames: ["dadSprite00", "dadSprite01", "dadSprite02", "dadSprite03"] //names are from the json files
+            frames: this.anims.generateFrameNumbers('daughter', {
+                frames: ["daughterSprite00", "daughterSprite01", "daughterSprite02", "daughterSprite03"] //names are from the json files
             })
         })
         this.anims.create({
 
-            key: "up",
+            key: "upDaughter",
             frameRate: 12,
-            frames: this.anims.generateFrameNumbers('father', {
-                frames: ["dadSprite012", "dadSprite013", "dadSprite014", "dadSprite015"]
+            frames: this.anims.generateFrameNumbers('daughter', {
+                frames: ["daughterSprite12", "daughterSprite13", "daughterSprite14", "daughterSprite15"]
             })
         })
         this.anims.create({
 
-            key: "right",
+            key: "rightDaughter",
             frameRate: 12,
-            frames: this.anims.generateFrameNumbers('father', {
-                frames: ["dadSprite08", "dadSprite09", "dadSprite010", "dadSprite011"]
+            frames: this.anims.generateFrameNumbers('daughter', {
+                frames: ["daughterSprite08", "daughterSprite09", "daughterSprite10", "daughterSprite11"]
             })
         })
 
         this.anims.create({
 
-            key: "left",
+            key: "leftDaughter",
             frameRate: 12,
-            frames: this.anims.generateFrameNumbers('father', {
+            frames: this.anims.generateFrameNumbers('daughter', {
 
-                frames: ["dadSprite04", "dadSprite05", "dadSprite06", "dadSprite07"]
+                frames: ["daughterSprite04", "daughterSprite05", "daughterSprite06", "daughterSprite07"]
             })
         })
     }
@@ -59,7 +59,7 @@ class play01 extends Phaser.Scene{
         //variables
         
         this.textBox = false;
-        console.log("At Play01");
+        console.log("At Play02");
 
         //array list, contains the dialouge that is being shown on the screen
 
@@ -98,14 +98,14 @@ class play01 extends Phaser.Scene{
         furnitureLayer.setCollisionByProperty({collides: true});
 
 
-        //father
-        this.father = this.physics.add.sprite(centerX, centerY, 'father', 'dadSprite00');
-        this.father.body.setCollideWorldBounds(true);
+        //daughter
+        this.daughter = this.physics.add.sprite(centerX, centerY, 'daughter', 'daughterSprite00');
+        this.daughter.body.setCollideWorldBounds(true);
         this.vel = 100;
 
         //collison code
-        this.physics.add.collider(this.father, wallsLayer);
-        this.physics.add.collider(this.father, furnitureLayer);
+        this.physics.add.collider(this.daughter, wallsLayer);
+        this.physics.add.collider(this.daughter, furnitureLayer);
 
         //text
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
@@ -122,23 +122,26 @@ class play01 extends Phaser.Scene{
 
         if(this.textBox==false){
             if(keyLEFT.isDown){
-                this.father.play("left", true); //play animation key for hiting left
+                this.daughter.play("leftDaughter", true); //play animation key for hiting left
                 this.direction.x = -5;
+                console.log(this.daughter.x, this.daughter.y);
             }else if(keyRIGHT.isDown){
                 this.direction.x = 5;
-                this.father.play("right", true);
+                this.daughter.play("rightDaughter", true);
+                console.log(this.daughter.x, this.daughter.y);
             }
             if(keyUP.isDown){
-                this.father.play("up", true);
+                this.daughter.play("upDaughter", true);
                 this.direction.y = -5;
+                console.log(this.daughter.x, this.daughter.y);
             }else if(keyDOWN.isDown){
-                this.father.play("down", true);
+                this.daughter.play("downDaughter", true);
                 this.direction.y = 5;
-                
+                console.log(this.daughter.x, this.daughter.y);
             }
             this.direction.normalize();
-            this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
-            if(this.father.x==362 && (264<=this.father.y<=268)){ 
+            this.daughter.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
+            if(this.daughter.x==370 && (260<=this.daughter.y) && (this.daughter.y <=265)){ 
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("On Carpet");
                 this.textBox=true;
@@ -157,7 +160,7 @@ class play01 extends Phaser.Scene{
                 }
             }
             if(this.currentDialouge>=this.dialougeScript.length){
-                this.scene.start('play02Scene');
+                this.scene.start('play03Scene');
             }
         }
 
