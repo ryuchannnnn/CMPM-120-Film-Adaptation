@@ -4,43 +4,43 @@ class play01 extends Phaser.Scene{
     }
 
     preload(){
-        //Father Animation, animations will be played depending on what keys are clicked
+        // Father Animation, animations will be played depending on what keys are clicked
+        // sprite is moving downward
         this.anims.create({
 
-            key: "down", //you'll need this key when you need to play an animation
-            frameRate: 12,
+            key: "down", // you'll need this key when you need to play an animation
+            frameRate: 12, // frame rate of the sprite
             frames: this.anims.generateFrameNumbers('father', {
                 frames: ["dadSprite00", "dadSprite01", "dadSprite02", "dadSprite03"] //names are from the json files
             })
         })
+        // sprite is moving up 
         this.anims.create({
-
-            key: "up",
-            frameRate: 12,
+            key: "up", // you'll need this key when you need to play an animation
+            frameRate: 12, // frame rate of the sprite
             frames: this.anims.generateFrameNumbers('father', {
-                frames: ["dadSprite012", "dadSprite013", "dadSprite014", "dadSprite015"]
+                frames: ["dadSprite012", "dadSprite013", "dadSprite014", "dadSprite015"] // names are from the json files
             })
         })
+        // sprite is moving to the right
         this.anims.create({
-
-            key: "right",
-            frameRate: 12,
+            key: "right", // you'll need this key when you need to play an animation
+            frameRate: 12, // frame rate of the sprite
             frames: this.anims.generateFrameNumbers('father', {
-                frames: ["dadSprite08", "dadSprite09", "dadSprite010", "dadSprite011"]
+                frames: ["dadSprite08", "dadSprite09", "dadSprite010", "dadSprite011"] // names are from the json files
             })
         })
-
+        // sprite is moving to the left 
         this.anims.create({
 
-            key: "left",
-            frameRate: 12,
+            key: "left", // you'll need this key when you need to play an animation
+            frameRate: 12, // frame rate of the sprite
             frames: this.anims.generateFrameNumbers('father', {
 
-                frames: ["dadSprite04", "dadSprite05", "dadSprite06", "dadSprite07"]
+                frames: ["dadSprite04", "dadSprite05", "dadSprite06", "dadSprite07"] // names are from the json files
             })
         })
     }
-
 
     create(){
         //text boxes for our dialouge boxes
@@ -76,8 +76,8 @@ class play01 extends Phaser.Scene{
         "what is there to tell you?", 
         "Anyhow I guess you don't blame Yang Yang for not\ntalking to you, in many ways he takes after me.", 
         "Really."];
-        this.currentDialouge = 0;
-        this.speakerOption = ["NJ"];
+        this.currentDialouge = 0; // counter for which dialogue to show
+        this.speakerOption = ["NJ (father)"]; // the character who is speaking
         
 
         //KeyInput Codes
@@ -86,7 +86,7 @@ class play01 extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.zLastClicked = 0;
+        this.zLastClicked = 0; // counter for clicks
 
         //map
         const map = this.add.tilemap('scene1Json');
@@ -98,7 +98,7 @@ class play01 extends Phaser.Scene{
         furnitureLayer.setCollisionByProperty({collides: true});
 
 
-        //father
+        // father sprite properites 
         this.father = this.physics.add.sprite(centerX, centerY, 'father', 'dadSprite00');
         this.father.body.setCollideWorldBounds(true);
         this.vel = 100;
@@ -107,7 +107,7 @@ class play01 extends Phaser.Scene{
         this.physics.add.collider(this.father, wallsLayer);
         this.physics.add.collider(this.father, furnitureLayer);
 
-        //text
+        //textbox (set to visibility false until player reaches a spot on the floor)
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
         this.dialougeBox.visible = false;
         
@@ -117,33 +117,34 @@ class play01 extends Phaser.Scene{
         this.speaker.visible = false;        
         this.dialouge.visible = false;
     }
+
     update(time,delta){
         this.direction = new Phaser.Math.Vector2(0);
 
+        // if the player hasnt reached the carpet spot yet, they are free to move wherever they want
         if(this.textBox==false){
             if(keyLEFT.isDown){
-                this.father.play("left", true); //play animation key for hiting left
+                this.father.play("left", true); //play animation key for hitting left
                 this.direction.x = -5;
             }else if(keyRIGHT.isDown){
                 this.direction.x = 5;
-                this.father.play("right", true);
+                this.father.play("right", true); //play animation key for hitting right
             }
             if(keyUP.isDown){
-                this.father.play("up", true);
+                this.father.play("up", true);  // play animation key for hitting up
                 this.direction.y = -5;
             }else if(keyDOWN.isDown){
-                this.father.play("down", true);
+                this.father.play("down", true); // play animation key for hitting down
                 this.direction.y = 5;
-                
             }
             this.direction.normalize();
-            this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
+            this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     // how fast the sprite moves 
             if(this.father.x==362 && (264<=this.father.y<=268)){ 
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("On Carpet");
                 this.textBox=true;
             }   
-        }else if(this.textBox==true){
+        }else if(this.textBox==true){ // if the textbox is true, we start showing the dialogue
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
             this.speaker.visible = true;
@@ -156,6 +157,7 @@ class play01 extends Phaser.Scene{
                     this.dialouge.text = this.dialougeScript[this.currentDialouge];
                 }
             }
+            // go to next scene
             if(this.currentDialouge>=this.dialougeScript.length){
                 this.scene.start('play02Scene');
             }

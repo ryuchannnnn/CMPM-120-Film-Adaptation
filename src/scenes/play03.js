@@ -65,7 +65,7 @@ class play03 extends Phaser.Scene{
 
         this.dialougeScript = ["a\nb\nc"];
         this.currentDialouge = 0;
-        this.speakerOption = ["Son"];
+        this.speakerOption = ["Yang Yang (son)"];
         
 
         //KeyInput Codes

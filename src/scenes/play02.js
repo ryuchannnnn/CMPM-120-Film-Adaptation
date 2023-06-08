@@ -77,7 +77,7 @@ class play02 extends Phaser.Scene{
         "Anyhow I guess you don't blame Yang Yang for not\ntalking to you, in many ways he takes after me.", 
         "Really."];
         this.currentDialouge = 0;
-        this.speakerOption = ["NJ"];
+        this.speakerOption = ["Ting Ting (daughter)"];
         
 
         //KeyInput Codes
