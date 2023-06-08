@@ -64,18 +64,15 @@ class play02 extends Phaser.Scene{
         //array list, contains the dialouge that is being shown on the screen
 
         this.dialougeScript = 
-        ["Seems I am the only one left to keep you company.",
-        "When Min Min was home, I thought… she'd solve\nall the problems around here. But now… there's\nno one to do it.",
-        "And I really don't know when she will be back.\nIt's hard for me to mumble like this.\nI hope you won't be offended if I say… It's like \npraying.",
-        "I'm not sure if the other party can hear me…\nand I'm not sure if I'm sincere enough.",
-        "Frankly...\nThere's very little I'm sure about these days.\nI wake up feeling unsure about almost everything,", 
-        "and I wonder why I wake up at all, just to face\nthe same uncertainties again and again.", 
-        "...", 
-        "Would you want to wake up if you were me?",
-        "Maybe Yang Yang is right. You lived so many more\nyears. Other than these questions we can't\nanswer...", 
-        "what is there to tell you?", 
-        "Anyhow I guess you don't blame Yang Yang for not\ntalking to you, in many ways he takes after me.", 
-        "Really."];
+        [
+            "I thought it was the nurse in here, \nbut it seems you are awake.",
+            "I was at the police station. I cannot face going\n back to school.",
+            "I haven't slept in so long.\nI'm so tired grandma. \nBut now.. you've forgiven me, I can sleep.",
+            "Grandma.. Why is the world so different \nfrom what we thought it was?",
+            "Now that you're awake and see it again..\nHas it changed at all?",
+            "Now.. I close my eyes.. the world \nI see.. is so beautiful", 
+            "*As you wake up from you nap, \nyou overhear how the doctor says she\npassed away and had a peaceful death.*"
+        ];
         this.currentDialouge = 0;
         this.speakerOption = ["Ting Ting (daughter)"];
         
