@@ -44,7 +44,7 @@ class Load extends Phaser.Scene{
         this.load.image('mother', 'characterSprite/mother.png')
 
         // grandma's bed sprite
-        this.load.image('grandmaBed', 'characterSprite/grandmainBed.png');
+        this.load.image('grandmaBed', 'characterSprite/comatoseGrandma.png');
         console.log('assets have finished loading');
 
     }
