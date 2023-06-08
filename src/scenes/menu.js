@@ -19,7 +19,7 @@ class Menu extends Phaser.Scene{
     update(time,delta){
         if(keyP.isDown){
             this.sound.play('beap', { volume: 0.5 });
-            this.scene.start('play02Scene');
+            this.scene.start('play01Scene');
         }else if(keyZ.isDown){
             this.sound.play('beap', { volume: 0.5 });
             this.scene.start('rulesScene');
