@@ -64,20 +64,16 @@ class play03 extends Phaser.Scene{
         //array list, contains the dialouge that is being shown on the screen
 
         this.dialougeScript = [
-        "Can I talk to grandma?", 
-        "As his mother gives him the nod of approval.", 
-        "*Opens his notebook that he wrote*", 
         "I'm sorry grandma, its not that I don't want to \ntalk to you. I think of all the stuff I could \ntell you, you must already know.", 
         "Otherwise, you wouldn't always tell me to listen. \n", 
-        "They say you've all gone away *flips page*\nbut you didn't tell me where you went.", 
+        "They say you've all gone away\nbut you didn't tell me where you went.", 
         "I guess its someplace you think I should know, \nbut grandma, I know so little.", 
         "Do you know what I want to do when I grow up?", 
         "I want to tell people the things they don't know\nshow them the stuff they haven't seen.", 
         "It'll be so much fun. Perhaps one day... \nI'll find out where you've gone, and if I do, \ncan I tell everyone and bring them to visit you?", 
         "Grandma... I miss you. Especially when I see \nmy newborn cousin who still doesn't have a name.", 
         "He reminds me that you always said you felt old.\nI want to tell him that I feel old too.",
-        " ", 
-        "*closes his notebook*"
+        "... ", 
         ];
         this.currentDialouge = 0;
         this.speakerOption = ["Yang Yang (son)"];

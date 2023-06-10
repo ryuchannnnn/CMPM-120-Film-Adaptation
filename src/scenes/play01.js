@@ -44,6 +44,7 @@ class play01 extends Phaser.Scene{
 
     create(){
         //text boxes for our dialouge boxes
+        this.input.enabled = true
         let textConfig = {
             fontFamily: 'Copperplate',
             fontSize: '28px',
@@ -56,9 +57,9 @@ class play01 extends Phaser.Scene{
             },
             fixedWidth: 0
            }
-        //variables
+
         
-        this.textBox = false;
+        this.textBox = false; //If the textbox should be on the screen, this var should be true
         console.log("At Play01");
 
         //array list, contains the dialouge that is being shown on the screen

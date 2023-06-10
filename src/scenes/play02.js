@@ -7,7 +7,7 @@ class play02 extends Phaser.Scene{
         //Daughter Animation, animations will be played depending on what keys are clicked (ie: up will play the her walking up)
         this.anims.create({
 
-            key: "downDaughter", //you'll need this key when you need to play an animation
+            key: "downDaughter", // you'll need this key when you need to play an animation
             frameRate: 12,
             frames: this.anims.generateFrameNumbers('daughter', {
                 frames: ["daughterSprite00", "daughterSprite01", "daughterSprite02", "daughterSprite03"] //names are from the json files
@@ -66,12 +66,11 @@ class play02 extends Phaser.Scene{
         this.dialougeScript = 
         [
             "I thought it was the nurse in here, \nbut it seems you are awake.",
-            "I was at the police station. I cannot face going\n back to school.",
+            "I was at the police station. I cannot face going\nback to school.",
             "I haven't slept in so long.\nI'm so tired grandma. \nBut now.. you've forgiven me, I can sleep.",
             "Grandma.. Why is the world so different \nfrom what we thought it was?",
-            "Now that you're awake and see it again..\nHas it changed at all?",
-            "Now.. I close my eyes.. the world \nI see.. is so beautiful", 
-            "*As you wake up from you nap, \nyou overhear how the doctor says she\npassed away and had a peaceful death.*"
+            "Now that you're awake and see it again...\nHas it changed at all?",
+            "Now... I close my eyes.. the world \nI see.. is so beautiful"
         ];
         this.currentDialouge = 0;
         this.speakerOption = ["Ting Ting (daughter)"];
@@ -85,7 +84,7 @@ class play02 extends Phaser.Scene{
         keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.zLastClicked = 0;
 
-        //map
+        //map Code
         const map = this.add.tilemap('scene1Json');
         const tileset01 = map.addTilesetImage('house_inside', 'tilesetHouseImage');
         const bgLayer = map.createLayer('Background', tileset01);
@@ -95,7 +94,7 @@ class play02 extends Phaser.Scene{
         furnitureLayer.setCollisionByProperty({collides: true});
 
 
-        //daughter
+        //daughter sprite
         this.daughter = this.physics.add.sprite(centerX, centerY, 'daughter', 'daughterSprite00');
         this.daughter.body.setCollideWorldBounds(true);
         this.vel = 100;
@@ -116,25 +115,21 @@ class play02 extends Phaser.Scene{
     }
     update(time,delta){
         this.direction = new Phaser.Math.Vector2(0);
-
+        //If the textBox is false, it'll allow the players to move around
         if(this.textBox==false){
             if(keyLEFT.isDown){
                 this.daughter.play("leftDaughter", true); //play animation key for hiting left
                 this.direction.x = -5;
-                console.log(this.daughter.x, this.daughter.y);
             }else if(keyRIGHT.isDown){
                 this.direction.x = 5;
                 this.daughter.play("rightDaughter", true);
-                console.log(this.daughter.x, this.daughter.y);
             }
             if(keyUP.isDown){
                 this.daughter.play("upDaughter", true);
                 this.direction.y = -5;
-                console.log(this.daughter.x, this.daughter.y);
             }else if(keyDOWN.isDown){
                 this.daughter.play("downDaughter", true);
                 this.direction.y = 5;
-                console.log(this.daughter.x, this.daughter.y);
             }
             this.direction.normalize();
             this.daughter.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
@@ -143,7 +138,7 @@ class play02 extends Phaser.Scene{
                 console.log("On Carpet");
                 this.textBox=true;
             }   
-        }else if(this.textBox==true){
+        }else if(this.textBox==true){ //If the textBox is true, it'll stop the players from moving and the dialouge will play out
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
             this.speaker.visible = true;
