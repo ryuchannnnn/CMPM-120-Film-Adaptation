@@ -47,7 +47,7 @@ class play02 extends Phaser.Scene{
         let textConfig = {
             fontFamily: 'Copperplate',
             fontSize: '28px',
-            backgroundColor: '#DE3163',
+            backgroundColor: '#cc0000',
             color: '#ffff00',
             align: 'right',
             padding: {
@@ -119,6 +119,15 @@ class play02 extends Phaser.Scene{
 
         this.speaker.visible = false;        
         this.dialouge.visible = false;
+        //hint text, displays hint when 10 seconds have passed
+        this.hint = this.add.text(centerX,30, "Talk to Grandma", textConfig).setOrigin(0.5);
+        this.hint.visible = false;
+        this.clock = this.time.delayedCall(10000, ()=> {
+            if(this.textBox==false){
+                this.hint.visible = true;
+            }
+        })
+
     }
     update(time,delta){
         this.direction = new Phaser.Math.Vector2(0);
