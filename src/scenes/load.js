@@ -33,6 +33,12 @@ class Load extends Phaser.Scene{
         this.load.image('graveStones', 'lpc_grave_markers_rework-1.3/PNG/32x32/grave_markers.png');
         this.load.tilemapTiledJSON('scene3Json', 'tileMap/graveyardMap.json');
 
+        // menuScreen assets
+        this.load.image('menuBackground', 'titleScreen.png');
+        
+        // creditsScreen assets
+        this.load.image('creditBackground', 'creditScene.png');
+
         //audio assets
         this.load.audio('beap', 'buttonSFX.wav');
         
