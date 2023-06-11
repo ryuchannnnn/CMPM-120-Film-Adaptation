@@ -39,6 +39,12 @@ class Load extends Phaser.Scene{
         // creditsScreen assets
         this.load.image('creditBackground', 'creditsScene.png');
 
+        // end screen assets
+        this.load.image('theEnd', 'endBackground.png');
+
+        // rulesscreen assets
+        this.load.image('theRules', 'rulesScene.png');
+
         //audio assets
         this.load.audio('beap', 'buttonSFX.wav');
         

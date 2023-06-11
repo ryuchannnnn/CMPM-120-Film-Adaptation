@@ -3,9 +3,7 @@ class Rules extends Phaser.Scene{
         super({key: 'rulesScene'})
     }
     create(){
-        this.add.text(20, 20, "Rules Scene(Press Space to go back to menu)");
-        this.add.text(20, 60, "Use arrow keys to move");
-        this.add.text(20, 80, "Press Z to continue text box");
+        this.add.tileSprite(0,0,480,480, 'theRules').setOrigin(0,0);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
     update(){

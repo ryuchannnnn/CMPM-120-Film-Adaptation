@@ -3,8 +3,7 @@ class End extends Phaser.Scene{
         super({key: 'endScene'})
     }
     create(){
-        this.add.text(20, 20, "End Scene");
-        this.add.text(20, 40, "Press Space to go back to menu");
+        this.add.tileSprite(0,0,480,480, 'theEnd').setOrigin(0,0);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
     update(){
