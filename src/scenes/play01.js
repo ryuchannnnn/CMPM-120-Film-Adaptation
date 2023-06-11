@@ -98,6 +98,10 @@ class play01 extends Phaser.Scene{
         wallsLayer.setCollisionByProperty({ collides: true });
         furnitureLayer.setCollisionByProperty({collides: true});
 
+        //grandma
+        const comaGrandma = map.findObject('Spawn', obj => obj.name === 'grandmaSpawn');
+        this.grandma = this.physics.add.sprite(comaGrandma.x, comaGrandma.y, 'grandmaBed');
+
 
         // father sprite properites 
         this.father = this.physics.add.sprite(centerX, centerY, 'father', 'dadSprite00');
