@@ -156,6 +156,7 @@ class play03 extends Phaser.Scene{
             if((242<=this.son.x  && this.son.x<=272) && this.son.y==211){
                 console.log("Front of Grave");
                 this.sound.play('beap', { volume: 0.5 });
+                this.son.setFrame("sonSprite012");
                 this.textBox=true;
             }
             // console.log("coord at: ("+this.son.x+","+this.son.y+")");      

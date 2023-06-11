@@ -143,6 +143,7 @@ class play01 extends Phaser.Scene{
             if(this.father.x==362 && (264<=this.father.y<=268)){ 
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("On Carpet");
+                
                 this.textBox=true;
             }   
         }else if(this.textBox==true){ // if the textbox is true, we start showing the dialogue

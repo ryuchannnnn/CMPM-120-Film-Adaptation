@@ -85,7 +85,7 @@ class play02 extends Phaser.Scene{
         this.zLastClicked = 0;
 
         //map Code
-        const map = this.add.tilemap('scene1Json');
+        const map = this.add.tilemap('scne2Json');
         const tileset01 = map.addTilesetImage('house_inside', 'tilesetHouseImage');
         const bgLayer = map.createLayer('Background', tileset01);
         const wallsLayer = map.createLayer('Wall', tileset01);
@@ -95,13 +95,20 @@ class play02 extends Phaser.Scene{
 
 
         //daughter sprite
-        this.daughter = this.physics.add.sprite(centerX, centerY, 'daughter', 'daughterSprite00');
+        const daughterSpawn = map.findObject('Spawn', obj => obj.name === 'daugtherSpawn');
+        this.daughter = this.physics.add.sprite(daughterSpawn.x, daughterSpawn.y, 'daughter', 'daughterSprite00');
         this.daughter.body.setCollideWorldBounds(true);
         this.vel = 100;
+
+        //grandma sprite
+        const grandmaSpawn = map.findObject('Spawn', obj => obj.name === 'grandmaSpawn');
+        this.grandma = this.physics.add.sprite(grandmaSpawn.x, grandmaSpawn.y, 'gradmaDream');
+        this.grandma.body.setImmovable();
 
         //collison code
         this.physics.add.collider(this.daughter, wallsLayer);
         this.physics.add.collider(this.daughter, furnitureLayer);
+        this.physics.add.collider(this.daughter, this.grandma);
 
         //text
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
@@ -133,9 +140,10 @@ class play02 extends Phaser.Scene{
             }
             this.direction.normalize();
             this.daughter.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
-            if(this.daughter.x==370 && (260<=this.daughter.y) && (this.daughter.y <=265)){ 
+            if(this.daughter.x==370 && (270<=this.daughter.y) && (this.daughter.y <=274)){ 
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("On Carpet");
+                this.daughter.setFrame("daughterSprite12");
                 this.textBox=true;
             }   
         }else if(this.textBox==true){ //If the textBox is true, it'll stop the players from moving and the dialouge will play out

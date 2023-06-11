@@ -25,6 +25,9 @@ class Load extends Phaser.Scene{
         this.load.image('tilesetHouseImage', 'house_inside.png');
         this.load.tilemapTiledJSON('scene1Json', 'tileMap/scene1TileMap.json');
 
+        //playScene 2 assets where the setting is inside of the house during a dream
+        this.load.tilemapTiledJSON('scne2Json', 'tileMap/scene2TileMap.json' )
+
         //playScene 3 assets where the setting is at a funeral
         this.load.image('outsideImage', 'set.gif');
         this.load.image('graveStones', 'lpc_grave_markers_rework-1.3/PNG/32x32/grave_markers.png');
@@ -47,6 +50,9 @@ class Load extends Phaser.Scene{
         this.load.image('grandmaBed', 'characterSprite/comatoseGrandma.png');
         console.log('assets have finished loading');
 
+        //grandma's dream model
+        this.load.image('gradmaDream', 'characterSprite/standingGrandma.png');
+
     }
     create() {
         // check for local storage browser support
@@ -58,6 +64,8 @@ class Load extends Phaser.Scene{
 
         // go to Title scene
         this.scene.start('menuScene');
+        // this.scene.start('play01Scene');
+        // this.scene.start('play02Scene');
         // this.scene.start('play03Scene');
     }
 }
