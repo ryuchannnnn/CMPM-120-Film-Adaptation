@@ -5,6 +5,7 @@ class play01 extends Phaser.Scene{
 
     preload(){
         // Father Animation, animations will be played depending on what keys are clicked
+        
         // sprite is moving downward
         this.anims.create({
 
@@ -43,7 +44,7 @@ class play01 extends Phaser.Scene{
     }
 
     create(){
-        //text boxes for our dialouge boxes
+        //text boxes for our hint text
         this.input.enabled = true
         let textConfig = {
             fontFamily: 'Copperplate',
@@ -78,7 +79,7 @@ class play01 extends Phaser.Scene{
         "Anyhow I guess you don't blame Yang Yang for not\ntalking to you, in many ways he takes after me.", 
         "Really."];
         this.currentDialouge = 0; // counter for which dialogue to show
-        this.speakerOption = ["NJ (father)"]; // the character who is speaking
+        this.speakerOption = "NJ (father)"; // the character who is speaking
         
 
         //KeyInput Codes
@@ -87,9 +88,9 @@ class play01 extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.zLastClicked = 0; // counter for clicks
+        this.zLastClicked = 0; // counter for clicks, to prevent speeding through text
 
-        //map
+        //creating tile map code
         const map = this.add.tilemap('scene1Json');
         const tileset01 = map.addTilesetImage('house_inside', 'tilesetHouseImage');
         const bgLayer = map.createLayer('Background', tileset01);
@@ -98,17 +99,17 @@ class play01 extends Phaser.Scene{
         wallsLayer.setCollisionByProperty({ collides: true });
         furnitureLayer.setCollisionByProperty({collides: true});
 
-        //grandma
+        //grandma sprite
         const comaGrandma = map.findObject('Spawn', obj => obj.name === 'grandmaSpawn');
         this.grandma = this.physics.add.sprite(comaGrandma.x, comaGrandma.y, 'grandmaBed');
 
 
-        // father sprite properites 
+        // father sprite
         this.father = this.physics.add.sprite(centerX, centerY, 'father', 'dadSprite00');
         this.father.body.setCollideWorldBounds(true);
         this.vel = 100;
 
-        //collison code
+        //collison code with objects, sprites, and tilemap
         this.physics.add.collider(this.father, wallsLayer);
         this.physics.add.collider(this.father, furnitureLayer);
 
@@ -117,7 +118,7 @@ class play01 extends Phaser.Scene{
         this.dialougeBox.visible = false;
         
         this.dialouge = this.add.text(10, borderUISize - borderPadding + 380, this.dialougeScript[this.currentDialouge]);
-        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption[0]);
+        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption);
 
         this.speaker.visible = false;        
         this.dialouge.visible = false;
@@ -155,25 +156,25 @@ class play01 extends Phaser.Scene{
             this.father.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     // how fast the sprite moves 
             if(this.father.x==362 && (264<=this.father.y<=268)){ 
                 this.sound.play('beap', { volume: 0.5 });
-                console.log("On Carpet");
-                
-                this.textBox=true;
-            }   
+                console.log("On Carpet");                
+                this.textBox=true; //When players are on the location to trigger dialouge box, it'll set this.textBox to true
+            }  
+
         }else if(this.textBox==true){ // if the textbox is true, we start showing the dialogue
             this.hint.visible = false;
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
             this.speaker.visible = true;
-            if(keyZ.isDown && time>this.zLastClicked){
+            if(keyZ.isDown && time>this.zLastClicked){ //Checks to see if it has been 1 second since Z was last clicked
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("Z was clicked");
-                this.zLastClicked = time + 500;
+                this.zLastClicked = time + 1000;
                 this.currentDialouge +=1;
-                if(this.currentDialouge<this.dialougeScript.length){
-                    this.dialouge.text = this.dialougeScript[this.currentDialouge];
+                if(this.currentDialouge<this.dialougeScript.length){ //checks that we don't go beyond the dialouge array
+                    this.dialouge.text = this.dialougeScript[this.currentDialouge]; //changes the text in the text box 
                 }
             }
-            // go to next scene
+            // go to next scene once the dialouge if finished
             if(this.currentDialouge>=this.dialougeScript.length){
                 this.scene.start('play02Scene');
             }

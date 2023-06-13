@@ -5,6 +5,8 @@ class play03 extends Phaser.Scene{
 
     preload(){
         //son Animation, animations will be played depending on what keys are clicked
+        
+        // sprite is moving downward
         this.anims.create({
 
             key: "downSon", //you'll need this key when you need to play an animation
@@ -13,6 +15,7 @@ class play03 extends Phaser.Scene{
                 frames: ["sonSprite00", "sonSprite01", "sonSprite02", "sonSprite03"] //names are from the json files
             })
         })
+        // sprite is moving up 
         this.anims.create({
 
             key: "upSon",
@@ -21,6 +24,7 @@ class play03 extends Phaser.Scene{
                 frames: ["sonSprite012", "sonSprite013", "sonSprite014", "sonSprite015"]
             })
         })
+        // sprite is moving to the right
         this.anims.create({
 
             key: "rightSon",
@@ -29,7 +33,7 @@ class play03 extends Phaser.Scene{
                 frames: ["sonSprite08", "sonSprite09", "sonSprite010", "sonSprite011"]
             })
         })
-
+         // sprite is moving to the left 
         this.anims.create({
 
             key: "leftSon",
@@ -43,7 +47,7 @@ class play03 extends Phaser.Scene{
 
 
     create(){
-        //text boxes for our dialouge boxes
+        //text boxes for our hint text
         let textConfig = {
             fontFamily: 'Copperplate',
             fontSize: '28px',
@@ -56,15 +60,13 @@ class play03 extends Phaser.Scene{
             },
             fixedWidth: 0
            }
-        //variables
-        
-        this.textBox = false;
+        this.textBox = false; //If the textbox should be on the screen, this var should be true
         console.log("At Play03");
 
         //array list, contains the dialouge that is being shown on the screen
 
         this.dialougeScript = [
-        "I'm sorry grandma, its not that I don't want to \ntalk to you. I think of all the stuff I could \ntell you, you must already know.", 
+        "I'm sorry grandma, it's not that I don't want to \ntalk to you. I think of all the stuff I could \ntell you, you must already know.", 
         "Otherwise, you wouldn't always tell me to listen. \n", 
         "They say you've all gone away\nbut you didn't tell me where you went.", 
         "I guess its someplace you think I should know, \nbut grandma, I know so little.", 
@@ -75,8 +77,8 @@ class play03 extends Phaser.Scene{
         "He reminds me that you always said you felt old.\nI want to tell him that I feel old too.",
         "... ", 
         ];
-        this.currentDialouge = 0;
-        this.speakerOption = ["Yang Yang (son)"];
+        this.currentDialouge = 0; // counter for which dialogue to show
+        this.speakerOption = "Yang Yang (son)"; // the character who is speaking
         
 
         //KeyInput Codes
@@ -85,7 +87,7 @@ class play03 extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.zLastClicked = 0;
+        this.zLastClicked = 0; // counter for clicks, to prevent speeding through text
 
         //These lines of code load our map for our scene
         const map = this.add.tilemap('scene3Json');
@@ -114,7 +116,7 @@ class play03 extends Phaser.Scene{
         this.daughter.body.setImmovable();
 
 
-        //collison code
+        //collison code with objects, sprites, and tilemap
         this.physics.add.collider(this.son, floorLayer);
         this.physics.add.collider(this.son, treesLayer);
         this.physics.add.collider(this.son, graveLayer);
@@ -122,15 +124,16 @@ class play03 extends Phaser.Scene{
         this.physics.add.collider(this.son, this.mother);
         this.physics.add.collider(this.son, this.daughter);
 
-        //text
+        //textbox (set to visibility false until player reaches a spot on the floor)
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
         this.dialougeBox.visible = false;
         
         this.dialouge = this.add.text(10, borderUISize - borderPadding + 380, this.dialougeScript[this.currentDialouge]);
-        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption[0]);
+        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption);
 
         this.speaker.visible = false;        
         this.dialouge.visible = false;
+
         //hint text, displays hint when 10 seconds have passed
         this.hint = this.add.text(centerX,30, "Approach the Grave", textConfig).setOrigin(0.5);
         this.hint.visible = false;
@@ -143,46 +146,48 @@ class play03 extends Phaser.Scene{
     update(time,delta){
         this.direction = new Phaser.Math.Vector2(0);
 
+        // if the player hasnt reached the carpet spot yet, they are free to move wherever they want
         if(this.textBox==false){
             if(keyLEFT.isDown){
                 this.son.play("leftSon", true); //play animation key for hiting left
                 this.direction.x = -5;
             }else if(keyRIGHT.isDown){
                 this.direction.x = 5;
-                this.son.play("rightSon", true);
+                this.son.play("rightSon", true); //play animation key for hitting right
             }
             if(keyUP.isDown){
-                this.son.play("upSon", true);
+                this.son.play("upSon", true); // play animation key for hitting up
                 this.direction.y = -5;
             }else if(keyDOWN.isDown){
-                this.son.play("downSon", true);
+                this.son.play("downSon", true); // play animation key for hitting down
                 this.direction.y = 5;
                 
             }
             this.direction.normalize();
-            this.son.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);     
+            this.son.setVelocity(this.vel * this.direction.x, this.vel * this.direction.y);   // how fast the sprite moves  
             if((242<=this.son.x  && this.son.x<=272) && this.son.y==211){
                 console.log("Front of Grave");
                 this.sound.play('beap', { volume: 0.5 });
                 this.son.setFrame("sonSprite012");
-                this.textBox=true;
+                this.textBox=true; //When players are on the location to trigger dialouge box, it'll set this.textBox to true
             }
-            // console.log("coord at: ("+this.son.x+","+this.son.y+")");      
-        }else if(this.textBox==true){
+     
+        }else if(this.textBox==true){ // if the textbox is true, we start showing the dialogue
             this.hint.visible = false;
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
             this.speaker.visible = true;
-            if(keyZ.isDown && time>this.zLastClicked){
+            if(keyZ.isDown && time>this.zLastClicked){ //Checks to see if it has been 1 second since Z was last clicked
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("Z was clicked");
-                this.zLastClicked = time + 500;
+                this.zLastClicked = time + 1000;
                 this.currentDialouge +=1;
-                if(this.currentDialouge<this.dialougeScript.length){
-                    this.dialouge.text = this.dialougeScript[this.currentDialouge];
+                if(this.currentDialouge<this.dialougeScript.length){ //checks that we don't go beyond the dialouge array
+                    this.dialouge.text = this.dialougeScript[this.currentDialouge]; //changes the text in the text box 
                 }
             }
-            if(this.currentDialouge>=this.dialougeScript.length){
+            // go to next scene once the dialouge if finished
+            if(this.currentDialouge>=this.dialougeScript.length){ 
                 this.scene.start('endScene');
             }
         }

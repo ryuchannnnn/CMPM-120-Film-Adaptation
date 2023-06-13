@@ -5,6 +5,8 @@ class play02 extends Phaser.Scene{
 
     preload(){
         //Daughter Animation, animations will be played depending on what keys are clicked (ie: up will play the her walking up)
+        
+        // sprite is moving downward
         this.anims.create({
 
             key: "downDaughter", // you'll need this key when you need to play an animation
@@ -13,6 +15,7 @@ class play02 extends Phaser.Scene{
                 frames: ["daughterSprite00", "daughterSprite01", "daughterSprite02", "daughterSprite03"] //names are from the json files
             })
         })
+        // sprite is moving up 
         this.anims.create({
 
             key: "upDaughter",
@@ -21,6 +24,7 @@ class play02 extends Phaser.Scene{
                 frames: ["daughterSprite12", "daughterSprite13", "daughterSprite14", "daughterSprite15"]
             })
         })
+        // sprite is moving to the right
         this.anims.create({
 
             key: "rightDaughter",
@@ -29,7 +33,7 @@ class play02 extends Phaser.Scene{
                 frames: ["daughterSprite08", "daughterSprite09", "daughterSprite10", "daughterSprite11"]
             })
         })
-
+         // sprite is moving to the left 
         this.anims.create({
 
             key: "leftDaughter",
@@ -43,7 +47,7 @@ class play02 extends Phaser.Scene{
 
 
     create(){
-        //text boxes for our dialouge boxes
+        //text boxes for our hint text
         let textConfig = {
             fontFamily: 'Copperplate',
             fontSize: '28px',
@@ -56,9 +60,9 @@ class play02 extends Phaser.Scene{
             },
             fixedWidth: 0
            }
-        //variables
         
-        this.textBox = false;
+        
+        this.textBox = false; //If the textbox should be on the screen, this var should be true
         console.log("At Play02");
 
         //array list, contains the dialouge that is being shown on the screen
@@ -67,13 +71,13 @@ class play02 extends Phaser.Scene{
         [
             "I thought it was the nurse in here, \nbut it seems you are awake.",
             "I was at the police station. I cannot face going\nback to school.",
-            "I haven't slept in so long.\nI'm so tired grandma. \nBut now.. you've forgiven me, I can sleep.",
+            "I haven't slept in so long.\nI'm so tired grandma. \nBut now... you've forgiven me, I can sleep.",
             "Grandma.. Why is the world so different \nfrom what we thought it was?",
             "Now that you're awake and see it again...\nHas it changed at all?",
-            "Now... I close my eyes.. the world \nI see.. is so beautiful"
+            "Now... I close my eyes.. the world \nI see... is so beautiful"
         ];
-        this.currentDialouge = 0;
-        this.speakerOption = ["Ting Ting (daughter)"];
+        this.currentDialouge = 0; // counter for which dialogue to show
+        this.speakerOption = "Ting Ting (daughter)"; // counter for clicks, to prevent speeding through text
         
 
         //KeyInput Codes
@@ -82,9 +86,9 @@ class play02 extends Phaser.Scene{
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keyZ = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.zLastClicked = 0;
+        this.zLastClicked = 0; // counter for clicks
 
-        //map Code
+        //creating tile map code
         const map = this.add.tilemap('scne2Json');
         const tileset01 = map.addTilesetImage('house_inside', 'tilesetHouseImage');
         const bgLayer = map.createLayer('Background', tileset01);
@@ -105,20 +109,22 @@ class play02 extends Phaser.Scene{
         this.grandma = this.physics.add.sprite(grandmaSpawn.x, grandmaSpawn.y, 'gradmaDream');
         this.grandma.body.setImmovable();
 
-        //collison code
+        //collison code with objects, sprites, and tilemap
         this.physics.add.collider(this.daughter, wallsLayer);
         this.physics.add.collider(this.daughter, furnitureLayer);
         this.physics.add.collider(this.daughter, this.grandma);
 
-        //text
+        //textbox (set to visibility false until player reaches a spot on the floor)
         this.dialougeBox = this.add.rectangle(0, borderUISize - borderPadding+350, w, borderUISize*3, 0x9c0d03).setOrigin(0,0);
         this.dialougeBox.visible = false;
         
         this.dialouge = this.add.text(10, borderUISize - borderPadding + 380, this.dialougeScript[this.currentDialouge]);
-        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption[0]);
+        this.speaker = this.add.text(10, borderUISize - borderPadding + 360, this.speakerOption);
 
         this.speaker.visible = false;        
         this.dialouge.visible = false;
+
+
         //hint text, displays hint when 10 seconds have passed
         this.hint = this.add.text(centerX,30, "Talk to Grandma", textConfig).setOrigin(0.5);
         this.hint.visible = false;
@@ -127,6 +133,8 @@ class play02 extends Phaser.Scene{
                 this.hint.visible = true;
             }
         })
+
+
 
     }
     update(time,delta){
@@ -138,13 +146,13 @@ class play02 extends Phaser.Scene{
                 this.direction.x = -5;
             }else if(keyRIGHT.isDown){
                 this.direction.x = 5;
-                this.daughter.play("rightDaughter", true);
+                this.daughter.play("rightDaughter", true); //play animation key for hitting right
             }
             if(keyUP.isDown){
-                this.daughter.play("upDaughter", true);
+                this.daughter.play("upDaughter", true); // play animation key for hitting up
                 this.direction.y = -5;
             }else if(keyDOWN.isDown){
-                this.daughter.play("downDaughter", true);
+                this.daughter.play("downDaughter", true); // play animation key for hitting down
                 this.direction.y = 5;
             }
             this.direction.normalize();
@@ -153,21 +161,22 @@ class play02 extends Phaser.Scene{
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("On Carpet");
                 this.daughter.setFrame("daughterSprite12");
-                this.textBox=true;
+                this.textBox=true; //When players are on the location to trigger dialouge box, it'll set this.textBox to true
             }   
         }else if(this.textBox==true){ //If the textBox is true, it'll stop the players from moving and the dialouge will play out
             this.dialougeBox.visible = true;
             this.dialouge.visible = true;
             this.speaker.visible = true;
-            if(keyZ.isDown && time>this.zLastClicked){
+            if(keyZ.isDown && time>this.zLastClicked){ //Checks to see if it has been 1 second since Z was last clicked
                 this.sound.play('beap', { volume: 0.5 });
                 console.log("Z was clicked");
-                this.zLastClicked = time + 500;
+                this.zLastClicked = time + 1000;
                 this.currentDialouge +=1;
-                if(this.currentDialouge<this.dialougeScript.length){
-                    this.dialouge.text = this.dialougeScript[this.currentDialouge];
+                if(this.currentDialouge<this.dialougeScript.length){ //checks that we don't go beyond the dialouge array
+                    this.dialouge.text = this.dialougeScript[this.currentDialouge]; //changes the text in the text box
                 }
             }
+            // go to next scene once the dialouge if finished
             if(this.currentDialouge>=this.dialougeScript.length){
                 this.scene.start('play03Scene');
             }
